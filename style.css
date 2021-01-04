@@ -7,6 +7,13 @@ a {
     text-decoration: none;
     color: #000000;
 }
+a:hover {
+    text-decoration: none;
+}
+main a:hover {
+    transform: scale(1.2);
+    transition: 0.3s;
+}
 #img {
     width: 100px;
     height: 100px;
@@ -30,8 +37,18 @@ a {
     height: 100%;
     border-radius: 30px 30px 0 0;
 }
-.rating {
-    color: yellow;
+/* .rating {
+    /* color: yellow; */
+    /* background: -webkit-linear-gradient(45deg ,#DC9147, #915CF8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+} */
+.fa-star {
+    background: -webkit-linear-gradient(-20deg,#DC9147, #915CF8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .fas--three, .fas--four {
     color: grey;
