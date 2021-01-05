@@ -32,7 +32,7 @@ let getProductData = (async function () {
 })()
 //fonction qui permet l'affichage des données avec le parametre qui est un objet
 function productInfo (data) {
-    let productImage = document.querySelector('.img');
+    let productImage = document.querySelector('.picture');
     let productName = document.querySelector('.nom');
     let productPrice = document.querySelector('.prix');
     let productDescription = document.querySelector('.description');
