@@ -77,4 +77,8 @@ function productInfo (data) {
         }
     });
 }
-
+let random = document.querySelector('#random');
+function getRandomNumber() {
+    return Math.round(Math.random()*100);
+  }
+random.innerHTML = getRandomNumber();
