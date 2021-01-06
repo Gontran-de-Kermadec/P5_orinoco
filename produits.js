@@ -21,14 +21,22 @@
 //         product = productData
 //       })    
 //   }) ()
+class Storage {
+    static saveProducts(data) {
+        localStorage.setItem('data', JSON.stringify(data));
+    }
+}
+
 
 //fonction async pour recupérer les données
 let getProductData = (async function () {
     let productId = new URL(window.location.href).searchParams.get('id');
+    console.log(productId);
     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
     let data = await response.json();
     productInfo(data);
     console.log(data);
+    Storage.saveProducts(data);
 })()
 //fonction qui permet l'affichage des données avec le parametre qui est un objet
 function productInfo (data) {
@@ -37,10 +45,12 @@ function productInfo (data) {
     let productPrice = document.querySelector('.prix');
     let productDescription = document.querySelector('.description');
     let productColor = document.querySelector('.color');
+    let productId = document.querySelector('#panier');
     productImage.src = data.imageUrl;
     productName.innerHTML = data.name;
     productPrice.innerHTML = `${data.price / 100}€`;
     productDescription.innerHTML = data.description;
+    productId.href = `/panier.html?id=${data._id}`;
     data.colors.forEach(color => {
         // console.log(data.colors);
         // console.log(data.colors.length);
