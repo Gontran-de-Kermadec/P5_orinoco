@@ -17,3 +17,5 @@ async function getTeddiesData() {
     }
 }
 getTeddiesData();
+
+console.log(window.location);

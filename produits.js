@@ -21,22 +21,20 @@
 //         product = productData
 //       })    
 //   }) ()
-class Storage {
-    static saveProducts(data) {
-        localStorage.setItem('data', JSON.stringify(data));
-    }
-}
+
 
 
 //fonction async pour recupérer les données
 let getProductData = (async function () {
+    //variable productId est la simplement pour recupere l'id dans l'url
     let productId = new URL(window.location.href).searchParams.get('id');
     console.log(productId);
     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
     let data = await response.json();
     productInfo(data);
-    console.log(data);
-    Storage.saveProducts(data);
+    //console.log(data);
+    //store.saveProducts(data);
+    onClick(data);
 })()
 //fonction qui permet l'affichage des données avec le parametre qui est un objet
 function productInfo (data) {
@@ -50,7 +48,7 @@ function productInfo (data) {
     productName.innerHTML = data.name;
     productPrice.innerHTML = `${data.price / 100}€`;
     productDescription.innerHTML = data.description;
-    productId.href = `/panier.html?id=${data._id}`;
+    //productId.href = `/panier.html?id=${data._id}`;
     data.colors.forEach(color => {
         // console.log(data.colors);
         // console.log(data.colors.length);
@@ -87,8 +85,64 @@ function productInfo (data) {
         }
     });
 }
+
+//function qui affiche un nombre d'avis clients aleatoire
 let random = document.querySelector('#random');
 function getRandomNumber() {
     return Math.round(Math.random()*100);
   }
 random.innerHTML = getRandomNumber();
+
+//function pour attribuer données au local storage
+// class Storage {
+//     static saveProducts(data) {
+//         localStorage.setItem('data', JSON.stringify(data));
+//     }
+// }
+// class Storage {
+//     saveProducts(data) {
+//         localStorage.setItem('data', JSON.stringify(data));
+//     }
+// }
+// let store = new Storage();
+let addCartButton = document.querySelector(".add-cart");
+let cartItems = [];
+function onClick (data) {
+    addCartButton.addEventListener("click", () => {
+        // cartItems.push(data);
+        // console.log(cartItems);
+        // localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+        let getItem = JSON.parse(localStorage.getItem('ItemInCart'));
+        console.log(getItem[0]._id);
+        //store.saveProducts(data);
+        if (getItem === null) {
+            cartItems.push(data);
+            localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+            //getItem[data._id] = {
+            //     quantity: 1,
+            //     ...data
+            //   }
+            console.log(cartItems);
+    //         console.log(getItem);
+    //     //     localStorage.setItem('ItemInCart', getItem);
+    //     // } else {
+    //     //     
+    //     // }
+        } else if (getItem[data._id]){
+            getItem[data._id].quantity++
+            //cartItems.push(data);
+            //localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+            // getItem;
+            // 
+            // localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+        }
+    
+})}
+
+let array = [1,2,3];
+localStorage.setItem('array', JSON.stringify(array));
+
+
+console.log(window.location);
+let redirection = new URL(window.location.href);
+console.log(redirection);
