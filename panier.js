@@ -74,3 +74,14 @@
             <td>${item.price/100}€</td>
         `
     });
+
+
+    // function alreadyAdded (getItemInCart) {
+    //     getItemInCart
+    // }
+    // console.log(Object.values(getItemInCart[0]));
+    // let objet = Object.values(getItemInCart[0]);
+    // if (objet[0]) {
+    //     console.log(objet[0]);
+    // }
+    

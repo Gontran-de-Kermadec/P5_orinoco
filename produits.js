@@ -21,13 +21,13 @@
 //         product = productData
 //       })    
 //   }) ()
-
+let productId = new URL(window.location.href).searchParams.get('id');
 
 
 //fonction async pour recupérer les données
 let getProductData = (async function () {
     //variable productId est la simplement pour recupere l'id dans l'url
-    let productId = new URL(window.location.href).searchParams.get('id');
+    //let productId = new URL(window.location.href).searchParams.get('id');
     console.log(productId);
     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
     let data = await response.json();
@@ -41,8 +41,8 @@ let getProductData = (async function () {
     let name = data.name;
     let price = data.price;
 
-    let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price, productId);
-    console.log(nouveau);
+    // let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price, productId);
+    // console.log(nouveau);
 })()
 //fonction qui permet l'affichage des données avec le parametre qui est un objet
 function productInfo (data) {
@@ -136,22 +136,42 @@ function onClick (data) {
             //     quantity: 1,
             //     ...data
             //   }
-            console.log(itemInCart);
         } 
+        // else {
+        //     for (let j = 0; j < itemInCart.length; j++) {
+        //         if (itemInCart[j].colorSelected === colorSelected && itemInCart[j].name === name) {
+        //             console.log(itemInCart[j].colorSelected, itemInCart[j].name);
+        //             addCartButton.disabled = true;
+        //         }
+        //     }
+        // }
+        //if (itemInCart !== null) { {
+        //         }
+        //         //         console.log(itemInCart[j].colorSelected);
+        //         //         if (itemInCart[i].colorSelected === )
+        //     }
+            // if (itemInCart[j].colorSelected === true) {
+            //     console.log(itemInCart[j].colorSelected);
+            // }
+        //}
         // else if (itemInCart !== null){
         //     itemInCart;
         //     console.log(getItem);
         //     cartItems.push(data);
         //     localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
         // }
-        let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price);
+        let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price, productId, 1);
         itemInCart.push(nouveau);
         localStorage.setItem('ItemInCart', JSON.stringify(itemInCart));
+        // if (itemInCart !== null) {
+        //     if (itemInCart.colorSelected === )
+        //     for (let j = 0; j < itemInCart.length; j++) {
+        //         console.log(itemInCart[j].colorSelected);
+        //         if (itemInCart[i].colorSelected === )
+        //     }
+        // }
     
 })}
-
-let array = [1,2,3];
-localStorage.setItem('array', JSON.stringify(array));
 
 
 console.log(window.location);
@@ -166,18 +186,18 @@ console.log(redirection);
 //alert( select.options[ index ].value )
 // let prix = document.querySelector('.prix').TEXT_NODE;
 // console.log(prix);
-function selectedColor () {
-    let colorSelected = document.querySelector('#colorSelect').value;
-    console.log(colorSelected);
-}
+// function selectedColor () {
+//     let colorSelected = document.querySelector('#colorSelect').value;
+//     console.log(colorSelected);
+// }
 
 class ProduitChoisi {
-    constructor(colorSelected, imageUrl, name, price, productId) {
+    constructor(colorSelected, imageUrl, name, price, productId, quantity) {
         this.colorSelected = colorSelected;
         this.imageUrl = imageUrl;
         this.name = name;
         this.price = price;
         this.productId = productId;
+        this.quantity = quantity;
     }
-    
 }
