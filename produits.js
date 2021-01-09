@@ -105,37 +105,34 @@ random.innerHTML = getRandomNumber();
 //     }
 // }
 // let store = new Storage();
-let addCartButton = document.querySelector(".add-cart");
-let cartItems = [];
 function onClick (data) {
+    let addCartButton = document.querySelector(".add-cart");
     addCartButton.addEventListener("click", () => {
+        //let cartItems = [];
         // cartItems.push(data);
         // console.log(cartItems);
         // localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
-        let getItem = JSON.parse(localStorage.getItem('ItemInCart'));
-        console.log(getItem[0]._id);
+        let itemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
+        console.log(itemInCart);
         //store.saveProducts(data);
-        if (getItem === null) {
-            cartItems.push(data);
-            localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+        if (itemInCart === null) {
+            itemInCart = [];
+            //cartItems.push(data);
+            //localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
             //getItem[data._id] = {
             //     quantity: 1,
             //     ...data
             //   }
-            console.log(cartItems);
-    //         console.log(getItem);
-    //     //     localStorage.setItem('ItemInCart', getItem);
-    //     // } else {
-    //     //     
-    //     // }
-        } else if (getItem[data._id]){
-            getItem[data._id].quantity++
-            //cartItems.push(data);
-            //localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
-            // getItem;
-            // 
-            // localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
-        }
+            console.log(itemInCart);
+        } 
+        // else if (itemInCart !== null){
+        //     itemInCart;
+        //     console.log(getItem);
+        //     cartItems.push(data);
+        //     localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
+        // }
+        itemInCart.push(data);
+        localStorage.setItem('ItemInCart', JSON.stringify(itemInCart));
     
 })}
 

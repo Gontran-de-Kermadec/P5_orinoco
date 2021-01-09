@@ -37,4 +37,40 @@
 //     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart))
   
     // Redirect to shopping cart page
-    window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
+    //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
+    console.log(window.location);
+    let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
+    console.log(getItemInCart[0].name);
+
+
+    //affichage panier
+    let tbody = document.querySelector('.tbody');
+    // for(let i = 0; i < getItemInCart.length; i++) {
+    //     console.log(getItemInCart[i].name);
+    //     tbody.innerHTML = `
+    //     <tr>
+    //         <td>
+    //             <div class="img_conteneur">
+    //                 <img src="${getItemInCart[i].imageUrl}" alt="Ours en peluche" class="picture">
+    //             </div>
+    //         </td>
+    //         <td>${getItemInCart[i].name}</td>
+    //         <td>${getItemInCart[i].price/100}€</td>
+    //     </tr>
+    // `
+    // }
+    getItemInCart.forEach(item => {
+        console.log(item);
+        let line = document.createElement("tr");
+        tbody.appendChild(line);
+        //line.innerHTML = 'voila';
+        line.innerHTML = `
+            <td>
+                <div class="img_conteneur">
+                    <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
+                </div>
+            </td>
+            <td>${item.name}</td>
+            <td>${item.price/100}€</td>
+        `
+    });
