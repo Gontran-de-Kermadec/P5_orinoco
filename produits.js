@@ -35,6 +35,14 @@ let getProductData = (async function () {
     //console.log(data);
     //store.saveProducts(data);
     onClick(data);
+    //selectedColor();
+    let colorSelected = document.querySelector('#colorSelect').value;
+    let imageUrl = data.imageUrl;
+    let name = data.name;
+    let price = data.price;
+
+    let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price, productId);
+    console.log(nouveau);
 })()
 //fonction qui permet l'affichage des données avec le parametre qui est un objet
 function productInfo (data) {
@@ -54,20 +62,20 @@ function productInfo (data) {
         // console.log(data.colors.length);
         if (data.colors.length === 1) {
             productColor.innerHTML = `
-        <select name="color" id="color-select">
+        <select name="color" id="colorSelect">
             <option value="${data.colors[0]}">${data.colors[0]}</option>
         </select>
         `; 
         } else if (data.colors.length === 2){
             productColor.innerHTML = `
-            <select name="color" id="color-select">
+            <select name="color" id="colorSelect">
                 <option value="${data.colors[0]}">${data.colors[0]}</option>
                 <option value="${data.colors[1]}">${data.colors[1]}</option>
             </select>
             `; 
         } else if (data.colors.length === 3){
             productColor.innerHTML = `
-            <select name="color" id="color-select">
+            <select name="color" id="colorSelect">
                 <option value="${data.colors[0]}">${data.colors[0]}</option>
                 <option value="${data.colors[1]}">${data.colors[1]}</option>
                 <option value="${data.colors[2]}">${data.colors[2]}</option>
@@ -75,7 +83,7 @@ function productInfo (data) {
             `; 
         } else {
             productColor.innerHTML = `
-            <select name="color" id="color-select">
+            <select name="color" id="colorSelect">
                 <option value="${data.colors[0]}">${data.colors[0]}</option>
                 <option value="${data.colors[1]}">${data.colors[1]}</option>
                 <option value="${data.colors[2]}">${data.colors[2]}</option>
@@ -107,7 +115,12 @@ random.innerHTML = getRandomNumber();
 // let store = new Storage();
 function onClick (data) {
     let addCartButton = document.querySelector(".add-cart");
+    let colorSelected = document.querySelector('#colorSelect').value;
+    let imageUrl = data.imageUrl;
+    let name = data.name;
+    let price = data.price;
     addCartButton.addEventListener("click", () => {
+        let colorSelected = document.querySelector('#colorSelect').value;
         //let cartItems = [];
         // cartItems.push(data);
         // console.log(cartItems);
@@ -131,7 +144,8 @@ function onClick (data) {
         //     cartItems.push(data);
         //     localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
         // }
-        itemInCart.push(data);
+        let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price);
+        itemInCart.push(nouveau);
         localStorage.setItem('ItemInCart', JSON.stringify(itemInCart));
     
 })}
@@ -143,3 +157,27 @@ localStorage.setItem('array', JSON.stringify(array));
 console.log(window.location);
 let redirection = new URL(window.location.href);
 console.log(redirection);
+
+
+
+//let index = colorSelected.selectedIndex;
+//console.log(colorSelected.options[index].value);
+
+//alert( select.options[ index ].value )
+// let prix = document.querySelector('.prix').TEXT_NODE;
+// console.log(prix);
+function selectedColor () {
+    let colorSelected = document.querySelector('#colorSelect').value;
+    console.log(colorSelected);
+}
+
+class ProduitChoisi {
+    constructor(colorSelected, imageUrl, name, price, productId) {
+        this.colorSelected = colorSelected;
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.price = price;
+        this.productId = productId;
+    }
+    
+}

@@ -70,7 +70,7 @@
                     <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
                 </div>
             </td>
-            <td>${item.name}</td>
+            <td>${item.name} - ${item.colorSelected}</td>
             <td>${item.price/100}€</td>
         `
     });
