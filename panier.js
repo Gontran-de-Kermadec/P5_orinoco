@@ -73,23 +73,56 @@ getItemInCart.forEach(item => {
             </div>
         </td>
         <td>${item.name} - ${item.colorSelected}</td>
-        <td><span>-</span>${item.quantity}<span>+</span></td>
-        <td><span class="price">${item.price/100}</span>€</td>
+        <td><span class="less">-</span><span class="qty">${item.quantity}</span><span class="plus">+</span></td>
+        <td><span class="price totprice">${item.price/100}</span>€</td>
         <td class="delete">Supprimer</td>
     `
 });
+//manipulation quantité
+let price = document.querySelectorAll(".price");
+let quantite = document.querySelectorAll(".qty");
+//let prixTotal = 0;
+let addItem = document.querySelectorAll(".plus");
+let decreaseItem = document.querySelectorAll(".less");
+for(let i = 0; i < quantite.length; i++) {
+    let quantiteTot = (parseInt(quantite[i].textContent));
+    let prixItem = parseInt(price[i].textContent);
+    console.log(prixItem);
+    let prixTotItem;
+    //augmente le nombre d'article
+    addItem[i].addEventListener("click", () => {
+        quantiteTot = quantiteTot + 1;
+        quantite[i].innerHTML = quantiteTot;
+        prixTotItem = prixItem + parseInt(price[i].textContent);
+        console.log(prixTotItem);
+        price[i].innerHTML = prixTotItem;
+    })
+    //diminue le nombre d'article
+    decreaseItem[i].addEventListener("click", () => {
+        quantiteTot = quantiteTot - 1;
+        quantite[i].innerHTML = quantiteTot;
+        prixTotItem = parseInt(price[i].textContent) - prixItem;
+        //console.log(prixTotItem);
+        price[i].innerHTML = prixTotItem;
+    })
+    //console.log(prixTotItem[i]);
+    // prixTotal = prixTotal + parseInt(price[i].textContent);
+    // console.log(parseInt(price[i].textContent));
+}
 
 //creation prix total
-let price = document.querySelectorAll(".price");
+let totPrice = document.querySelectorAll(".totprice");
+//console.log(totPrice);
 let prixTotal = 0;
-for(let i = 0; i < price.length; i++) { 
-    prixTotal = prixTotal + parseInt(price[i].textContent);
+for(let i = 0; i < totPrice.length; i++) { 
+    console.log(totPrice[i].textContent);
+    //prixTotal = prixTotal + parseInt(price[i].textContent);
 }
-tbody.appendChild(line)
-line.innerHTML = `
-    <td>prix total: </td>
-    <td>${prixTotal}€</td>
-`;
+// tbody.appendChild(line)
+// line.innerHTML = `
+//     <td>prix total: </td>
+//     <td>${prixTotal}€</td>
+// `;
 // boucle de suppression d'un article
 let effacer = document.querySelectorAll(".delete");
 for(let j = 0; j < effacer.length; j++) {
