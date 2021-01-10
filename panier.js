@@ -38,13 +38,15 @@
   
     // Redirect to shopping cart page
     //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
-    console.log(window.location);
-    let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
-    console.log(getItemInCart[0].name);
+console.log(window.location);
+let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
+console.log(getItemInCart.length);
 
 
     //affichage panier
-    let tbody = document.querySelector('.tbody');
+let tbody = document.querySelector('.tbody');
+let line = document.createElement("tr");
+tbody.appendChild(line);
     // for(let i = 0; i < getItemInCart.length; i++) {
     //     console.log(getItemInCart[i].name);
     //     tbody.innerHTML = `
@@ -59,23 +61,45 @@
     //     </tr>
     // `
     // }
-    getItemInCart.forEach(item => {
-        console.log(item);
-        let line = document.createElement("tr");
-        tbody.appendChild(line);
-        //line.innerHTML = 'voila';
-        line.innerHTML = `
-            <td>
-                <div class="img_conteneur">
-                    <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
-                </div>
-            </td>
-            <td>${item.name} - ${item.colorSelected}</td>
-            <td>${item.price/100}€</td>
-        `
-    });
+getItemInCart.forEach(item => {
+    console.log(item);
+    let line = document.createElement("tr");
+    tbody.appendChild(line);
+    line.classList.add("line");
+    line.innerHTML = `
+        <td>
+            <div class="img_conteneur">
+                <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
+            </div>
+        </td>
+        <td>${item.name} - ${item.colorSelected}</td>
+        <td><span>-</span>${item.quantity}<span>+</span></td>
+        <td><span class="price">${item.price/100}</span>€</td>
+        <td class="delete">Supprimer</td>
+    `
+});
 
-
+//creation prix total
+let price = document.querySelectorAll(".price");
+let prixTotal = 0;
+for(let i = 0; i < price.length; i++) { 
+    prixTotal = prixTotal + parseInt(price[i].textContent);
+}
+tbody.appendChild(line)
+line.innerHTML = `
+    <td>prix total: </td>
+    <td>${prixTotal}€</td>
+`;
+// boucle de suppression d'un article
+let effacer = document.querySelectorAll(".delete");
+for(let j = 0; j < effacer.length; j++) {
+    effacer[j].addEventListener("click", () => {
+            console.log(getItemInCart[j]);
+            let elementSuppr = getItemInCart.splice([j], 1);
+            localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+            location.reload();
+    })
+}
     // function alreadyAdded (getItemInCart) {
     //     getItemInCart
     // }
@@ -84,4 +108,5 @@
     // if (objet[0]) {
     //     console.log(objet[0]);
     // }
-    
+    // getItemInCart.splice(3, 1);
+    // console.log(getItemInCart);
