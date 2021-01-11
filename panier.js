@@ -41,8 +41,11 @@
 console.log(window.location);
 let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
 console.log(getItemInCart[0].quantity);
-
-
+let getPrices = JSON.parse(localStorage.getItem('itemPrice'));
+console.log(getPrices);
+let prixTotalItem = JSON.parse(localStorage.getItem('prixTotalItem'));
+console.log(prixTotalItem);
+//console.log(JSON.parse(window.localStorage.getItem('sampleList')));
     //affichage panier
 let tbody = document.querySelector('.tbody');
 let line = document.createElement("tr");
@@ -81,14 +84,21 @@ getItemInCart.forEach(item => {
 //manipulation quantité
 let price = document.querySelectorAll(".price");
 let quantite = document.querySelectorAll(".qty");
-//let prixTotal = 0;
+let prixTotal;
 let addItem = document.querySelectorAll(".plus");
 let decreaseItem = document.querySelectorAll(".less");
+prixTotalItem = [];
+let sommetotal
 for(let i = 0; i < quantite.length; i++) {
     let quantiteTot = (parseInt(quantite[i].textContent));
-    const prixItemOrigin = parseInt(price[i].textContent);
+    //const prixItemOrigin = parseInt(price[i].textContent);
+    const prixItemOrigin = parseInt(getPrices[i]);
     let prixItem = parseInt(price[i].textContent);
     let prixTotItem;
+    prixTotal = getItemInCart[i].quantity * prixItemOrigin;
+    console.log(prixTotal);
+    prixTotalItem.splice([i], 1, prixItem);
+    localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
     //augmente le nombre d'article
     addItem[i].addEventListener("click", () => {
         quantiteTot = quantiteTot + 1;
@@ -97,28 +107,62 @@ for(let i = 0; i < quantite.length; i++) {
         console.log(prixItemOrigin);
         console.log(prixTotItem);
         price[i].innerHTML = prixTotItem;
-        console.log(getItemInCart[i].price = prixTotItem *100);  
+        getItemInCart[i].price = prixTotItem * 100;  
         getItemInCart[i].quantity = quantiteTot; 
         localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
-        // location.reload();
+        //prixTotalItem.push(prixTotItem);
+        prixTotalItem.splice([i], 1, prixTotItem);
+        localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
+        // sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+        // // prixTotal = prixTotal + prixItemOrigin;
+        // // console.log(prixTotal);
+        // tbody.appendChild(line)
+        // line.innerHTML = `
+        // <td>prix total: </td>
+        // <td>${prixTotal}€</td>
+        // `;
     })
     //diminue le nombre d'article
     decreaseItem[i].addEventListener("click", () => {
         quantiteTot = quantiteTot - 1;
         quantite[i].innerHTML = quantiteTot;
-        prixTotItem = parseInt(price[i].textContent) - prixItem;
+        prixTotItem = parseInt(price[i].textContent) - prixItemOrigin;
         //console.log(prixTotItem);
         price[i].innerHTML = prixTotItem;
+        getItemInCart[i].price = prixTotItem * 100;
+        getItemInCart[i].quantity = quantiteTot; 
+        localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+        prixTotalItem.splice([i], 1, prixTotItem);
+        localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
     })
-    let prixTotal = price[i].textContent;
-    console.log(price[i].textContent + prixTotal);
+    //let prixTotal =  prixTotal + price[i].textContent;
+    
+    // console.log(price[i].textContent + prixTotal);
     //console.log(prixTotItem);
     // prixTotal = prixTotal + parseInt(price[i].textContent);
     // console.log(parseInt(price[i].textContent));
 }
 
 //creation prix total
-
+window.onstorage = function(e) {
+    console.log(prixTotalItem);
+  };
+// window.addEventListener('localDataStorage', () => {
+//     // Lorsque le stockage local change, vider la liste sur
+//     // la console.
+//     console.log(prixTotalItem);
+//   });
+// let sommeTotal = 0;
+// prixTotalItem.forEach((prix) => {
+//     sommeTotal += panier.price / 100;
+// });
+//     sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+//     console.log(sommetotal);
+// tbody.appendChild(line)
+//     line.innerHTML = `
+//     <td>prix total: </td>
+//     <td>${sommetotal}€</td>
+//     `;
 //function totalPrice () {
 //     let totPrice = document.querySelectorAll(".totprice");
 //     //console.log(totPrice);
@@ -141,7 +185,9 @@ for(let j = 0; j < effacer.length; j++) {
     effacer[j].addEventListener("click", () => {
             console.log(getItemInCart[j]);
             let elementSuppr = getItemInCart.splice([j], 1);
+            let priceSuppr = getPrices.splice([j], 1);
             localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+            localStorage.setItem('itemPrice', JSON.stringify(getPrices));
             location.reload();
     })
 }

@@ -127,9 +127,11 @@ function onClick (data) {
         // localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
         let itemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
         console.log(itemInCart);
+        let itemPrice = JSON.parse(localStorage.getItem('itemPrice'));
         //store.saveProducts(data);
         if (itemInCart === null) {
             itemInCart = [];
+            itemPrice = [];
             //cartItems.push(data);
             //localStorage.setItem('ItemInCart', JSON.stringify(cartItems));
             //getItem[data._id] = {
@@ -170,6 +172,11 @@ function onClick (data) {
         //         if (itemInCart[i].colorSelected === )
         //     }
         // }
+        let getPrice = data.price / 100;
+        console.log(getPrice);
+        itemPrice.push(getPrice);
+        localStorage.setItem('itemPrice', JSON.stringify(itemPrice));
+        //console.log(getPrice);
     
 })}
 
