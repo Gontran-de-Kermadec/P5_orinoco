@@ -40,7 +40,7 @@
     //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
 console.log(window.location);
 let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
-console.log(getItemInCart.length);
+console.log(getItemInCart[0].quantity);
 
 
     //affichage panier
@@ -86,16 +86,21 @@ let addItem = document.querySelectorAll(".plus");
 let decreaseItem = document.querySelectorAll(".less");
 for(let i = 0; i < quantite.length; i++) {
     let quantiteTot = (parseInt(quantite[i].textContent));
+    const prixItemOrigin = parseInt(price[i].textContent);
     let prixItem = parseInt(price[i].textContent);
-    console.log(prixItem);
     let prixTotItem;
     //augmente le nombre d'article
     addItem[i].addEventListener("click", () => {
         quantiteTot = quantiteTot + 1;
         quantite[i].innerHTML = quantiteTot;
-        prixTotItem = prixItem + parseInt(price[i].textContent);
+        prixTotItem = prixItemOrigin + parseInt(price[i].textContent);
+        console.log(prixItemOrigin);
         console.log(prixTotItem);
         price[i].innerHTML = prixTotItem;
+        console.log(getItemInCart[i].price = prixTotItem *100);  
+        getItemInCart[i].quantity = quantiteTot; 
+        localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+        // location.reload();
     })
     //diminue le nombre d'article
     decreaseItem[i].addEventListener("click", () => {
@@ -105,19 +110,26 @@ for(let i = 0; i < quantite.length; i++) {
         //console.log(prixTotItem);
         price[i].innerHTML = prixTotItem;
     })
-    //console.log(prixTotItem[i]);
+    let prixTotal = price[i].textContent;
+    console.log(price[i].textContent + prixTotal);
+    //console.log(prixTotItem);
     // prixTotal = prixTotal + parseInt(price[i].textContent);
     // console.log(parseInt(price[i].textContent));
 }
 
 //creation prix total
-let totPrice = document.querySelectorAll(".totprice");
-//console.log(totPrice);
-let prixTotal = 0;
-for(let i = 0; i < totPrice.length; i++) { 
-    console.log(totPrice[i].textContent);
-    //prixTotal = prixTotal + parseInt(price[i].textContent);
-}
+
+//function totalPrice () {
+//     let totPrice = document.querySelectorAll(".totprice");
+//     //console.log(totPrice);
+//     let prixTotal = 0;
+//     for(let i = 0; i < totPrice.length; i++) { 
+//         console.log(totPrice[i].textContent);
+//         prixTotal = prixTotal + parseInt(totPrice[i].textContent);
+//         console.log(prixTotal); 
+//     }
+// //}
+
 // tbody.appendChild(line)
 // line.innerHTML = `
 //     <td>prix total: </td>
