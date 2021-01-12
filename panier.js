@@ -144,9 +144,38 @@ for(let i = 0; i < quantite.length; i++) {
 }
 
 //creation prix total
-window.onstorage = function(e) {
-    console.log(prixTotalItem);
-  };
+//let getAllLines = document.querySelectorAll('.line');
+
+for(let j = 0; j < price.length; j++) {
+    sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+    tbody.appendChild(line);
+        line.innerHTML = `
+        <td>prix total: </td>
+        <td>${sommetotal}€</td>
+        `;
+    //console.log(price[j].textContent);
+    addItem[j].addEventListener("click", () => {
+        sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+        console.log(sommetotal);
+        tbody.appendChild(line)
+        line.innerHTML = `
+        <td>prix total: </td>
+        <td>${sommetotal}€</td>
+        `;
+    })
+    decreaseItem[j].addEventListener('click', () => {
+        sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+        console.log(sommetotal);
+        tbody.appendChild(line)
+        line.innerHTML = `
+        <td>prix total: </td>
+        <td>${sommetotal}€</td>
+        `;
+    })
+    
+       
+}
+
 // window.addEventListener('localDataStorage', () => {
 //     // Lorsque le stockage local change, vider la liste sur
 //     // la console.
