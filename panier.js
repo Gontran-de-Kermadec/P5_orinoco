@@ -8,9 +8,6 @@
 // })()
 
 
-// // sessionStorage.setItem("couleur", "bleu");
-
-
 // // Manage click on button 'add to cart'
 // document.getElementById('addToCart').addEventListener('click', (e) => {
 //     e.preventDefault()
@@ -38,9 +35,9 @@
   
     // Redirect to shopping cart page
     //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
-console.log(window.location);
+//console.log(window.location);
 let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
-console.log(getItemInCart[0].quantity);
+console.log(getItemInCart.length);
 let getPrices = JSON.parse(localStorage.getItem('itemPrice'));
 console.log(getPrices);
 let prixTotalItem = JSON.parse(localStorage.getItem('prixTotalItem'));
@@ -65,7 +62,6 @@ tbody.appendChild(line);
     // `
     // }
 getItemInCart.forEach(item => {
-    console.log(item);
     let line = document.createElement("tr");
     tbody.appendChild(line);
     line.classList.add("line");
@@ -210,6 +206,27 @@ for(let j = 0; j < price.length; j++) {
 // `;
 // boucle de suppression d'un article
 let effacer = document.querySelectorAll(".delete");
+for(let i = 0; i < quantite.length; i++) {
+    //if()
+    decreaseItem[i].addEventListener('click', (e) => {
+        if (getItemInCart[i].quantity === 0) {
+            let elementSuppr = getItemInCart.splice([i], 1);
+            let priceSuppr = getPrices.splice([i], 1);
+            localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+            localStorage.setItem('itemPrice', JSON.stringify(getPrices));
+            location.reload();
+        }
+        // if (getItemInCart[i].quantity === 1) {
+        //     console.log(e.cancelable);
+        //     decreaseItem[i].removeEventListener('click', decreaseItem[i], true);
+        //     // e.preventDefault();
+        //     // e.stopPropagation();
+        //     // e.stopImmediatePropagation();
+        // }
+    })
+    
+}
+
 for(let j = 0; j < effacer.length; j++) {
     effacer[j].addEventListener("click", () => {
             console.log(getItemInCart[j]);
@@ -230,3 +247,79 @@ for(let j = 0; j < effacer.length; j++) {
     // }
     // getItemInCart.splice(3, 1);
     // console.log(getItemInCart);
+/////////////////////////------------------tableau produits------------------////////////////////
+//console.log(getItemInCart[0].price);
+let products = getItemInCart;
+//pr(getItemInCart);
+console.log(products);
+let contact = {
+    name: "jean",
+    family : "dupond"
+};
+let commande = {
+    products,
+    contact
+};
+// console.log(commande);
+// let envoyer = JSON.stringify(commande);
+// console.log(envoyer);
+///////////////////////////////----------------Validation formulaire-----------------------------////////////
+let familyName = document.querySelector("#name");
+console.log(familyName.textContent);
+let regexName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+let formulaire = document.querySelector("#form"); 
+console.log(formulaire.name.value);
+let bouton = document.querySelector("#btn");
+formulaire.addEventListener('submit', function(e) {
+    //console.log(regexName.test(familyName.value));
+    console.log("hello");
+    // if (regexName.test(familyName.value) === false) {
+    //     console.log(familyName.value);
+    //     familyName.style.backgroundColor = 'red';
+    // }
+});
+bouton.addEventListener('click', function(e) {
+    console.log(familyName.textContent);
+    console.log(regexName.test(familyName.textContent));
+    console.log("hello");
+    // if (regexName.test(familyName.value) === false) {
+    //     console.log(familyName.value);
+    //     familyName.style.backgroundColor = 'red';
+    // }
+});
+
+
+
+
+let emailReg = new RegExp(/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
+///////////////////---------------Envoi données---------------------/////////////////
+async function postForm(commande) {
+    try {
+        let response = await fetch("http://localhost:3000/api/teddies/order", {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(commande),
+        });
+        if (response.ok) {
+            let responseId = await response.json();
+            console.log(responseId);
+            // getOrderConfirmationId(responseId);
+            // window.location.href = "confirm.html";
+        } else {
+            console.error('Retour du serveur : ', response.status);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+postForm(commande);
+
+
+// async function getTeddiesData() {
+//     let response = await fetch('http://localhost:3000/api/teddies');
+//     let data = await response.json();
+//     console.log(data);
+// }
+// getTeddiesData();
