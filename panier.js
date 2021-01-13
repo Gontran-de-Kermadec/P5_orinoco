@@ -36,6 +36,8 @@
     // Redirect to shopping cart page
     //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
 //console.log(window.location);
+// let objetpanier = localStorage.getItem('ItemInCart');
+// console.log(JSON.stringify(objetpanier));
 let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
 console.log(getItemInCart.length);
 let getPrices = JSON.parse(localStorage.getItem('itemPrice'));
@@ -144,6 +146,7 @@ for(let i = 0; i < quantite.length; i++) {
 
 for(let j = 0; j < price.length; j++) {
     sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
+    localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
     tbody.appendChild(line);
         line.innerHTML = `
         <td>prix total: </td>
@@ -153,6 +156,7 @@ for(let j = 0; j < price.length; j++) {
     addItem[j].addEventListener("click", () => {
         sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
         console.log(sommetotal);
+        localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
         tbody.appendChild(line)
         line.innerHTML = `
         <td>prix total: </td>
@@ -162,6 +166,7 @@ for(let j = 0; j < price.length; j++) {
     decreaseItem[j].addEventListener('click', () => {
         sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
         console.log(sommetotal);
+        localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
         tbody.appendChild(line)
         line.innerHTML = `
         <td>prix total: </td>
@@ -169,7 +174,7 @@ for(let j = 0; j < price.length; j++) {
         `;
     })
     
-       
+    
 }
 
 // window.addEventListener('localDataStorage', () => {
@@ -248,14 +253,21 @@ for(let j = 0; j < effacer.length; j++) {
     // getItemInCart.splice(3, 1);
     // console.log(getItemInCart);
 /////////////////////////------------------tableau produits------------------////////////////////
-//console.log(getItemInCart[0].price);
-let products = getItemInCart;
-//pr(getItemInCart);
+let products = [];
+for(let i = 0; i < quantite.length; i++) {
+    products.push(getItemInCart[i].productId);
+}
 console.log(products);
+
+//pr(getItemInCart);
 let contact = {
-    name: "jean",
-    family : "dupond"
+    firstName : "test",
+    lastName : "test",
+    address : "test",
+    city : "test",
+    email : "test@test.com",
 };
+console.log(JSON.stringify(contact));
 let commande = {
     products,
     contact
@@ -302,11 +314,12 @@ async function postForm(commande) {
             },
             body: JSON.stringify(commande),
         });
+        console.log(response);
         if (response.ok) {
             let responseId = await response.json();
+            confirmationId(responseId);
             console.log(responseId);
-            // getOrderConfirmationId(responseId);
-            // window.location.href = "confirm.html";
+            //window.location.href = "confirmation.html";
         } else {
             console.error('Retour du serveur : ', response.status);
         }
@@ -316,6 +329,12 @@ async function postForm(commande) {
 }
 postForm(commande);
 
+function confirmationId (responseId) {
+    let orderId = responseId.orderId;
+    console.log(orderId);
+    localStorage.setItem("orderConfirmationId", orderId);
+}
+
 
 // async function getTeddiesData() {
 //     let response = await fetch('http://localhost:3000/api/teddies');
@@ -323,3 +342,9 @@ postForm(commande);
 //     console.log(data);
 // }
 // getTeddiesData();
+
+
+
+/////////////-----------lien pour page confirm
+// lien.href= `/corfirmation.html?id=${data[i]._id}`;
+// lien.href= `/corfirmation.html?order_id=${data[i]._id}`;
