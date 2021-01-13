@@ -276,34 +276,70 @@ let commande = {
 // let envoyer = JSON.stringify(commande);
 // console.log(envoyer);
 ///////////////////////////////----------------Validation formulaire-----------------------------////////////
+
+
+// let formulaire = document.querySelector("#form"); 
+// let bouton = document.querySelector("#btn");
+// formulaire.addEventListener('submit', function(e) {
+//     //console.log(regexName.test(familyName.value));
+//     console.log("hello");
+//     // if (regexName.test(familyName.value) === false) {
+//     //     console.log(familyName.value);
+//     //     familyName.style.backgroundColor = 'red';
+//     // }
+// });
+// bouton.addEventListener('click', function(e) {
+//     console.log(familyName.textContent);
+//     console.log(regexName.test(familyName.textContent));
+//     console.log("hello");
+//     // if (regexName.test(familyName.value) === false) {
+//     //     console.log(familyName.value);
+//     //     familyName.style.backgroundColor = 'red';
+//     // }
+// });
 let familyName = document.querySelector("#name");
-console.log(familyName.textContent);
-let regexName = /^[a-zA-Z]+ [a-zA-Z]+$/;
-let formulaire = document.querySelector("#form"); 
-console.log(formulaire.name.value);
-let bouton = document.querySelector("#btn");
-formulaire.addEventListener('submit', function(e) {
-    //console.log(regexName.test(familyName.value));
-    console.log("hello");
-    // if (regexName.test(familyName.value) === false) {
-    //     console.log(familyName.value);
-    //     familyName.style.backgroundColor = 'red';
-    // }
+let allInputs = document.querySelectorAll(".input");
+let propre = document.querySelector("#propre");
+let bien = document.querySelector("#bien");
+
+console.log(allInputs);
+let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
+for(let i = 0; i<allInputs.length; i++) {
+    allInputs[i].addEventListener('focusout', function() {
+        if (regexName.test(allInputs[i].value) === false || allInputs[i].value === "") {
+            allInputs[i].style.backgroundColor = 'red';
+            console.log(allInputs[i].value);
+        } 
+        // else if (regexName.test(allInputs[i].value)) {
+        //     propre.innerHTML = "Propre";
+        //     bien.innerHTML = "Bien";
+        // }
+    
+    });
+}
+let emailInput = document.querySelector("#email");
+let genial = document.querySelector("#genial");
+let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+emailInput.addEventListener('focusout', function() {
+    console.log(emailInput.value); 
+    if (regexEmail.test(emailInput.value) === false || emailInput.value === "") {
+        emailInput.style.backgroundColor = 'red';
+        console.log('email invalide');
+    } else {
+        console.log('parfait');
+        genial.innerHTML = "Génial";
+    }
 });
-bouton.addEventListener('click', function(e) {
-    console.log(familyName.textContent);
-    console.log(regexName.test(familyName.textContent));
-    console.log("hello");
-    // if (regexName.test(familyName.value) === false) {
-    //     console.log(familyName.value);
-    //     familyName.style.backgroundColor = 'red';
-    // }
-});
+// console.log(familyName.value);
+// console.log(regexName.test(familyName.value));
+
+    
 
 
 
 
-let emailReg = new RegExp(/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
+//let emailReg = new RegExp(/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
+
 ///////////////////---------------Envoi données---------------------/////////////////
 async function postForm(commande) {
     try {
