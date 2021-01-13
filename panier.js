@@ -275,9 +275,31 @@ let commande = {
 // console.log(commande);
 // let envoyer = JSON.stringify(commande);
 // console.log(envoyer);
-///////////////////////////////----------------Validation formulaire-----------------------------////////////
+/////////////////////////////----------------Validation formulaire-----------------------------////////////
 
 
+
+document.forms.form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // let familyName = document.querySelector("#name").value;
+    // let firstName = document.querySelector("#firstname").value;
+    // let email = document.querySelector("#email").value;
+    //let address = document.querySelector("#address").value;
+    let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
+    let regexAddress = /^[A-Za-z\0-9\'\s\.\-\,]+$/;
+    let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+    
+    let inputs = this;
+    console.log(inputs);
+    if (regexName.test(inputs.surname.value) === false || regexName.test(inputs.firstname.value) === false) {
+        console.log("remplissez les noms");
+    } else if (regexEmail.test(inputs.email.value) === false) {
+        console.log("remplissez l'email correctement");
+    } else if (regexAddress.test(inputs.address.value) === false || regexAddress.test(inputs.ville.value) === false) {
+        console.log("remplissez l'adresse correct");
+    }
+    //postForm(commande);
+})
 // let formulaire = document.querySelector("#form"); 
 // let bouton = document.querySelector("#btn");
 // formulaire.addEventListener('submit', function(e) {
@@ -297,48 +319,59 @@ let commande = {
 //     //     familyName.style.backgroundColor = 'red';
 //     // }
 // });
-let familyName = document.querySelector("#name");
-let allInputs = document.querySelectorAll(".input");
-let propre = document.querySelector("#propre");
-let bien = document.querySelector("#bien");
 
-console.log(allInputs);
-let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
-for(let i = 0; i<allInputs.length; i++) {
-    allInputs[i].addEventListener('focusout', function() {
-        if (regexName.test(allInputs[i].value) === false || allInputs[i].value === "") {
-            allInputs[i].style.backgroundColor = 'red';
-            console.log(allInputs[i].value);
-        } 
-        // else if (regexName.test(allInputs[i].value)) {
-        //     propre.innerHTML = "Propre";
-        //     bien.innerHTML = "Bien";
-        // }
+// let inputName = document.querySelectorAll(".inputname");
+// let inputAddress = document.querySelectorAll(".inputaddress");
+// let propre = document.querySelector("#propre");
+// let bien = document.querySelector("#bien");
+
+// let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
+// let regexAddress = /^[A-Za-z\0-9\'\s\.\-\,]+$/;
+// for(let i = 0; i<inputName.length; i++) {
+//     inputName[i].addEventListener('focusout', function() {
+//         if (regexName.test(inputName[i].value) === false || inputName[i].value === "") {
+//             inputName[i].style.backgroundColor = 'red';
+//             console.log(inputName[i].value);
+//         } 
+//         // else if (regexName.test(allInputs[i].value)) {
+//         //     propre.innerHTML = "Propre";
+//         //     bien.innerHTML = "Bien";
+//         // }
     
-    });
-}
-let emailInput = document.querySelector("#email");
-let genial = document.querySelector("#genial");
-let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
-emailInput.addEventListener('focusout', function() {
-    console.log(emailInput.value); 
-    if (regexEmail.test(emailInput.value) === false || emailInput.value === "") {
-        emailInput.style.backgroundColor = 'red';
-        console.log('email invalide');
-    } else {
-        console.log('parfait');
-        genial.innerHTML = "Génial";
-    }
-});
+//     });
+// }
+
+    // for(let i = 0; i<inputAddress.length; i++) {
+    //     inputAddress[i].addEventListener('focusout', function() {
+    //         if (regexAddress.test(inputAddress[i].value) === false || inputAddress[i].value === "") {
+    //             inputAddress[i].style.backgroundColor = 'red';
+    //             console.log(inputAddress[i].value);
+    //         } else {
+    //             return 10;
+    //         }
+    //         // else if (regexName.test(allInputs[i].value)) {
+    //         //     propre.innerHTML = "Propre";
+    //         //     bien.innerHTML = "Bien";
+    //         // }
+    //     });
+    // }
+
+
+// let emailInput = document.querySelector("#email");
+// let genial = document.querySelector("#genial");
+// let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+// emailInput.addEventListener('focusout', function() {
+//     console.log(emailInput.value); 
+//     if (regexEmail.test(emailInput.value) === false || emailInput.value === "") {
+//         emailInput.style.backgroundColor = 'red';
+//         console.log('email invalide');
+//     } else {
+//         console.log('parfait');
+//         genial.innerHTML = "Génial";
+//     }
+// });
 // console.log(familyName.value);
 // console.log(regexName.test(familyName.value));
-
-    
-
-
-
-
-//let emailReg = new RegExp(/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
 
 ///////////////////---------------Envoi données---------------------/////////////////
 async function postForm(commande) {
@@ -363,14 +396,14 @@ async function postForm(commande) {
         console.log(e);
     }
 }
-postForm(commande);
+
 
 function confirmationId (responseId) {
     let orderId = responseId.orderId;
     console.log(orderId);
     localStorage.setItem("orderConfirmationId", orderId);
 }
-
+postForm(commande);
 
 // async function getTeddiesData() {
 //     let response = await fetch('http://localhost:3000/api/teddies');

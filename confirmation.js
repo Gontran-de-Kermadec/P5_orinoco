@@ -25,5 +25,10 @@ let mainBody = document.querySelector('.test');
 mainBody.innerHTML = `
 <p>Le montant de la commande : ${totalPrice}€</p>
 <p>Le référence de la commande : ${orderId}</p>
-
 `;
+
+
+document.querySelector('button').addEventListener('click', (e) => {
+    localStorage.clear();
+    window.location = "index.html";
+})
