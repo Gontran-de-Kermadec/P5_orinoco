@@ -48,6 +48,7 @@ console.log(prixTotalItem);
     //affichage panier
 let tbody = document.querySelector('.tbody');
 let line = document.createElement("tr");
+
 tbody.appendChild(line);
     // for(let i = 0; i < getItemInCart.length; i++) {
     //     console.log(getItemInCart[i].name);
@@ -66,7 +67,7 @@ tbody.appendChild(line);
 getItemInCart.forEach(item => {
     let line = document.createElement("tr");
     tbody.appendChild(line);
-    line.classList.add("line");
+    line.classList.add("line", "d-flex", "justify-content-center", "flex-column");
     line.innerHTML = `
         <td>
             <div class="img_conteneur">
@@ -168,6 +169,7 @@ for(let j = 0; j < price.length; j++) {
         console.log(sommetotal);
         localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
         tbody.appendChild(line)
+
         line.innerHTML = `
         <td>prix total: </td>
         <td>${sommetotal}€</td>
@@ -260,18 +262,28 @@ for(let i = 0; i < quantite.length; i++) {
 console.log(products);
 
 //pr(getItemInCart);
-let contact = {
-    firstName : "test",
-    lastName : "test",
-    address : "test",
-    city : "test",
-    email : "test@test.com",
-};
-console.log(JSON.stringify(contact));
-let commande = {
-    products,
-    contact
-};
+
+class Contact {
+    constructor(lastName, firstName, address, city, email) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.address = address;
+        this.city = city;
+        this.email = email;
+    }
+}
+// let contact = {
+//     firstName : "test",
+//     lastName : "test",
+//     address : "test",
+//     city : "test",
+//     email : "test@test.com",
+// };
+//console.log(JSON.stringify(contact));
+// let commande = {
+//     products,
+//     contact
+// };
 // console.log(commande);
 // let envoyer = JSON.stringify(commande);
 // console.log(envoyer);
@@ -290,15 +302,20 @@ document.forms.form.addEventListener('submit', (e) => {
     let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
     
     let inputs = this;
-    console.log(inputs);
-    if (regexName.test(inputs.surname.value) === false || regexName.test(inputs.firstname.value) === false) {
+    let contact = new Contact(inputs.lastname.value,inputs.firstname.value,inputs.address.value,inputs.city.value,inputs.email.value);
+    console.log(contact);
+    if (regexName.test(inputs.lastname.value) === false || regexName.test(inputs.firstname.value) === false) {
         console.log("remplissez les noms");
     } else if (regexEmail.test(inputs.email.value) === false) {
         console.log("remplissez l'email correctement");
-    } else if (regexAddress.test(inputs.address.value) === false || regexAddress.test(inputs.ville.value) === false) {
+    } else if (regexAddress.test(inputs.address.value) === false || regexAddress.test(inputs.city.value) === false) {
         console.log("remplissez l'adresse correct");
     }
-    //postForm(commande);
+    let commande = {
+    products,
+    contact
+    };
+    postForm(commande);
 })
 // let formulaire = document.querySelector("#form"); 
 // let bouton = document.querySelector("#btn");
@@ -388,7 +405,7 @@ async function postForm(commande) {
             let responseId = await response.json();
             confirmationId(responseId);
             console.log(responseId);
-            //window.location.href = "confirmation.html";
+            window.location.href = "confirmation.html";
         } else {
             console.error('Retour du serveur : ', response.status);
         }
@@ -402,8 +419,9 @@ function confirmationId (responseId) {
     let orderId = responseId.orderId;
     console.log(orderId);
     localStorage.setItem("orderConfirmationId", orderId);
+    localStorage.setItem("orderConfirmation", JSON.stringify(responseId));
 }
-postForm(commande);
+//postForm(commande);
 
 // async function getTeddiesData() {
 //     let response = await fetch('http://localhost:3000/api/teddies');

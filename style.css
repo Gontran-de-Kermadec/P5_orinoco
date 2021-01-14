@@ -62,6 +62,12 @@ main a:hover {
 .btn {
     background: linear-gradient(140deg,#DC9147, #915CF8);
 }
+
+
+/* page panier */
+tr, .line {
+    width: 100%;
+}
 @media (min-width: 768px) {
     .conteneur {
         width: 700px;

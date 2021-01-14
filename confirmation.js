@@ -16,15 +16,20 @@
 
 localStorage.getItem('TotalPrice');
 localStorage.getItem('orderConfirmationId');
+localStorage.getItem('orderConfirmation');
 
 console.log(JSON.parse(localStorage.getItem('TotalPrice')));
 let totalPrice = JSON.parse(localStorage.getItem('TotalPrice'));
+let orderConfirmation = JSON.parse(localStorage.getItem('orderConfirmation'));
+console.log(orderConfirmation.contact.lastName);
 let orderId = localStorage.getItem('orderConfirmationId');
 
 let mainBody = document.querySelector('.test');
+let customerName = document.querySelector('.name');
+customerName.innerHTML = `${orderConfirmation.contact.lastName}`;
 mainBody.innerHTML = `
-<p>Le montant de la commande : ${totalPrice}€</p>
-<p>Le référence de la commande : ${orderId}</p>
+<p class="text-center fs-4 fw-light">Montant de la commande : ${totalPrice}€</p>
+<p class="text-center fs-4 fw-light">Référence de la commande : ${orderId}</p>
 `;
 
 
