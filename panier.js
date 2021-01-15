@@ -1,16 +1,4 @@
-// let getProductData = (async function () {
-//     let productId = new URL(window.location.href).searchParams.get('id');
-//     console.log(productId);
-//     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
-//     let data = await response.json();
-//     //productInfo(data);
-//     console.log(data);
-// })()
 
-
-// // Manage click on button 'add to cart'
-// document.getElementById('addToCart').addEventListener('click', (e) => {
-//     e.preventDefault()
   
 //     // Get current shopping cart
 //     let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'))
@@ -49,33 +37,19 @@ console.log(prixTotalItem);
 let tbody = document.querySelector('.tbody');
 let line = document.createElement("tr");
 
-tbody.appendChild(line);
-    // for(let i = 0; i < getItemInCart.length; i++) {
-    //     console.log(getItemInCart[i].name);
-    //     tbody.innerHTML = `
-    //     <tr>
-    //         <td>
-    //             <div class="img_conteneur">
-    //                 <img src="${getItemInCart[i].imageUrl}" alt="Ours en peluche" class="picture">
-    //             </div>
-    //         </td>
-    //         <td>${getItemInCart[i].name}</td>
-    //         <td>${getItemInCart[i].price/100}€</td>
-    //     </tr>
-    // `
-    // }
+
 getItemInCart.forEach(item => {
     let line = document.createElement("tr");
     tbody.appendChild(line);
-    line.classList.add("line", "d-flex", "justify-content-center", "flex-column");
+    line.classList.add("line", "my-3", "shadow-sm");
     line.innerHTML = `
         <td>
-            <div class="img_conteneur">
+            <div class="img_conteneur mx-auto">
                 <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
             </div>
         </td>
         <td>${item.name} - ${item.colorSelected}</td>
-        <td><span class="less">-</span><span class="qty">${item.quantity}</span><span class="plus">+</span></td>
+        <td><span class="less">-</span><span class="qty mx-2 px-2 border">${item.quantity}</span><span class="plus">+</span></td>
         <td><span class="price totprice">${item.price/100}</span>€</td>
         <td class="delete">Supprimer</td>
     `
@@ -134,12 +108,6 @@ for(let i = 0; i < quantite.length; i++) {
         prixTotalItem.splice([i], 1, prixTotItem);
         localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
     })
-    //let prixTotal =  prixTotal + price[i].textContent;
-    
-    // console.log(price[i].textContent + prixTotal);
-    //console.log(prixTotItem);
-    // prixTotal = prixTotal + parseInt(price[i].textContent);
-    // console.log(parseInt(price[i].textContent));
 }
 
 //creation prix total
@@ -148,69 +116,25 @@ for(let i = 0; i < quantite.length; i++) {
 for(let j = 0; j < price.length; j++) {
     sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
     localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
-    tbody.appendChild(line);
-        line.innerHTML = `
-        <td>prix total: </td>
-        <td>${sommetotal}€</td>
-        `;
-    //console.log(price[j].textContent);
+    let somme = document.querySelector(".prixTotal");
+    somme.innerHTML = `Prix total: ${sommetotal}€`;
     addItem[j].addEventListener("click", () => {
         sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
         console.log(sommetotal);
         localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
-        tbody.appendChild(line)
-        line.innerHTML = `
-        <td>prix total: </td>
-        <td>${sommetotal}€</td>
-        `;
+        somme.innerHTML = `Prix total: ${sommetotal}€`;
     })
     decreaseItem[j].addEventListener('click', () => {
         sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
         console.log(sommetotal);
         localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
-        tbody.appendChild(line)
-
-        line.innerHTML = `
-        <td>prix total: </td>
-        <td>${sommetotal}€</td>
-        `;
+        somme.innerHTML = `Prix total: ${sommetotal}€`;
     })
     
     
 }
 
-// window.addEventListener('localDataStorage', () => {
-//     // Lorsque le stockage local change, vider la liste sur
-//     // la console.
-//     console.log(prixTotalItem);
-//   });
-// let sommeTotal = 0;
-// prixTotalItem.forEach((prix) => {
-//     sommeTotal += panier.price / 100;
-// });
-//     sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
-//     console.log(sommetotal);
-// tbody.appendChild(line)
-//     line.innerHTML = `
-//     <td>prix total: </td>
-//     <td>${sommetotal}€</td>
-//     `;
-//function totalPrice () {
-//     let totPrice = document.querySelectorAll(".totprice");
-//     //console.log(totPrice);
-//     let prixTotal = 0;
-//     for(let i = 0; i < totPrice.length; i++) { 
-//         console.log(totPrice[i].textContent);
-//         prixTotal = prixTotal + parseInt(totPrice[i].textContent);
-//         console.log(prixTotal); 
-//     }
-// //}
 
-// tbody.appendChild(line)
-// line.innerHTML = `
-//     <td>prix total: </td>
-//     <td>${prixTotal}€</td>
-// `;
 // boucle de suppression d'un article
 let effacer = document.querySelectorAll(".delete");
 for(let i = 0; i < quantite.length; i++) {
@@ -261,7 +185,6 @@ for(let i = 0; i < quantite.length; i++) {
 }
 console.log(products);
 
-//pr(getItemInCart);
 
 class Contact {
     constructor(lastName, firstName, address, city, email) {
@@ -289,14 +212,8 @@ class Contact {
 // console.log(envoyer);
 /////////////////////////////----------------Validation formulaire-----------------------------////////////
 
-
-
 document.forms.form.addEventListener('submit', (e) => {
     e.preventDefault();
-    // let familyName = document.querySelector("#name").value;
-    // let firstName = document.querySelector("#firstname").value;
-    // let email = document.querySelector("#email").value;
-    //let address = document.querySelector("#address").value;
     let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
     let regexAddress = /^[A-Za-z\0-9\'\s\.\-\,]+$/;
     let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
@@ -422,16 +339,3 @@ function confirmationId (responseId) {
     localStorage.setItem("orderConfirmation", JSON.stringify(responseId));
 }
 //postForm(commande);
-
-// async function getTeddiesData() {
-//     let response = await fetch('http://localhost:3000/api/teddies');
-//     let data = await response.json();
-//     console.log(data);
-// }
-// getTeddiesData();
-
-
-
-/////////////-----------lien pour page confirm
-// lien.href= `/corfirmation.html?id=${data[i]._id}`;
-// lien.href= `/corfirmation.html?order_id=${data[i]._id}`;

@@ -62,11 +62,30 @@ main a:hover {
 .btn {
     background: linear-gradient(140deg,#DC9147, #915CF8);
 }
+form {
+    text-align: initial ;
+}
 
 
 /* page panier */
-tr, .line {
+/* tr, .line {
     width: 100%;
+} */
+@media (max-width: 767px) {
+    table, tbody, tr, td {
+        display: block;
+    }
+    td {
+        padding: 5px;
+    }
+    .img_conteneur {
+        width: 140px;
+        height: 100px;
+    } 
+    .flex {
+        display: flex;
+        flex-direction: column;
+    }
 }
 @media (min-width: 768px) {
     .conteneur {
@@ -81,6 +100,9 @@ tr, .line {
     }
     .fontsize--changes {
         font-size: 1.3rem;
+    }
+    tr {
+        height: 100px;
     }
 }
 @media (min-width: 992px) {

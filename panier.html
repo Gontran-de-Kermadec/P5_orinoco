@@ -16,22 +16,34 @@
             <i class="fas fa-shopping-bag align-self-center"></i>
         </div>
     </header>
-    <main class="text-center">
-        <table class="table table-hover">
-            <tbody class="tbody text-center">
+    <main class="container my-2 text-center">
+        <table class="container table-hover">
+            <tbody class="container tbody text-center">
             </tbody>
         </table>
-        <form action="" method="POST" id="form">
-            <label for="lastname">Nom:</label>
-            <input type="text" name="lastname" id="lastname" value="" class="inputname" required><span id="propre"></span><br>
-            <label for="firstname">Prénom:</label>
-            <input type="text" name="firstname" id="firstname" value="" class="inputname" required><span id="bien"></span><br>
-            <label for="email">Adresse email:</label>
-            <input type="email" name="email" id="email" value="" required><span id="genial"></span><br>
-            <label for="address">Adresse:</label>
-            <input type="text" name="address" id="address" value="" class="inputaddress" required><span id="excellent"></span><br>
-            <label for="ville">Ville:</label>
-            <input type="text" name="city" id="city" value="" class="inputaddress" required><span id="parfait"></span><br>
+        <p class="prixTotal"></p>
+        <form action="" method="POST" id="form" class="container my-3">
+            <div class="flex">
+                <label for="lastname">Nom:</label>
+                <input type="text" name="lastname" id="lastname" value="" class="inputname" required><span id="propre"></span>
+            </div>
+            <div class="flex">
+                <label for="firstname">Prénom:</label>
+                <input type="text" name="firstname" id="firstname" value="" class="inputname" required><span id="bien"></span>
+            </div>
+            <div class="flex">
+                <label for="email">Adresse email:</label>
+                <input type="email" name="email" id="email" value="" required><span id="genial"></span>
+            </div>
+            <div class="flex">
+                <label for="address">Adresse:</label>
+                <input type="text" name="address" id="address" value="" class="inputaddress" required><span id="excellent"></span>
+            </div>
+            <div class="flex">
+                <label for="ville">Ville:</label>
+                <input type="text" name="city" id="city" value="" class="inputaddress" required><span id="parfait"></span>
+            </div>
+
             <button type="submit" id="btn" class="btn">Passer la commande</button>    
         </form>
         
