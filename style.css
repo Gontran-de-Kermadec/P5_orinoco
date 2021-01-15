@@ -37,14 +37,12 @@ main a:hover {
     width: 100%;
     height: 250px;
 } 
-.img_conteneur {
-    width: 80px;
-    height: 80px;
-} 
-.img, .picture {
+.img, .picture, .photo {
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+.img, .picture {
     border-radius: 30px 30px 0 0;
 }
 .fa-star {
@@ -59,18 +57,32 @@ main a:hover {
 #avis:hover {
     text-decoration: underline;
 }
+
+/******Page panier********/
+.delete, .less, .plus {
+    cursor: pointer;
+}
 .btn {
+    font-size: x-large;
     background: linear-gradient(140deg,#DC9147, #915CF8);
 }
 form {
     text-align: initial ;
 }
+.prixTotal, .warning {
+    font-weight: bold;
+    font-size: large;
+}
+input {
+    border: 1px solid #000;
+    border-radius: .25rem;
+}
 
+/******page confirmation******/
+.bg-color {
+    background-color: #F3E9F1;
+}
 
-/* page panier */
-/* tr, .line {
-    width: 100%;
-} */
 @media (max-width: 767px) {
     table, tbody, tr, td {
         display: block;
@@ -85,6 +97,9 @@ form {
     .flex {
         display: flex;
         flex-direction: column;
+    }
+    .photo {
+        border-radius: 15px;
     }
 }
 @media (min-width: 768px) {
@@ -104,6 +119,19 @@ form {
     tr {
         height: 100px;
     }
+    .flex {
+       width: 600px;
+    }
+    input {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        width: 500px;
+    }
+    .img_conteneur {
+        width: 100px;
+        height: 100px;
+    } 
 }
 @media (min-width: 992px) {
     .conteneur {

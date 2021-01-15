@@ -16,35 +16,38 @@
             <i class="fas fa-shopping-bag align-self-center"></i>
         </div>
     </header>
-    <main class="container my-2 text-center">
+    <main class="container my-5 text-center">
         <table class="container table-hover">
             <tbody class="container tbody text-center">
             </tbody>
         </table>
-        <p class="prixTotal"></p>
+        <p class="prixTotal my-3 fs-2"></p>
+        <p class="warning mt-5">Veuillez remplir le formulaire ci-dessous afin de passer commande</p>
         <form action="" method="POST" id="form" class="container my-3">
-            <div class="flex">
-                <label for="lastname">Nom:</label>
+            <div class="flex mx-md-auto my-1 position-relative fs-5">
+                <label for="lastname">Nom</label>
                 <input type="text" name="lastname" id="lastname" value="" class="inputname" required><span id="propre"></span>
             </div>
-            <div class="flex">
-                <label for="firstname">Prénom:</label>
+            <div class="flex mx-md-auto my-1 position-relative fs-5">
+                <label for="firstname">Prénom</label>
                 <input type="text" name="firstname" id="firstname" value="" class="inputname" required><span id="bien"></span>
             </div>
-            <div class="flex">
-                <label for="email">Adresse email:</label>
-                <input type="email" name="email" id="email" value="" required><span id="genial"></span>
+            <div class="flex mx-md-auto my-1 position-relative fs-5">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value=""   required><span id="genial"></span>
             </div>
-            <div class="flex">
-                <label for="address">Adresse:</label>
+            <div class="flex mx-md-auto my-1 position-relative fs-5">
+                <label for="address">Adresse</label>
                 <input type="text" name="address" id="address" value="" class="inputaddress" required><span id="excellent"></span>
             </div>
-            <div class="flex">
-                <label for="ville">Ville:</label>
+            <div class="flex mx-md-auto my-1 position-relative fs-5">
+                <label for="ville">Ville</label>
                 <input type="text" name="city" id="city" value="" class="inputaddress" required><span id="parfait"></span>
             </div>
-
-            <button type="submit" id="btn" class="btn">Passer la commande</button>    
+            <div class="text-center my-4">
+                <button type="submit" id="btn" class="btn">Passer la commande</button>
+            </div>
+                
         </form>
         
     </main>

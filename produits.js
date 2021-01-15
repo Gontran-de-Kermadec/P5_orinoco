@@ -1,26 +1,3 @@
-// (() => {
-//     // Search the product ID in URL
-//     let productId = new URL(window.location.href).searchParams.get('id')
-  
-//     // Fetch product data
-//     fetch(`http://localhost:3000/api/teddies/${productId}`)
-//       .catch(error => console.log(error))
-//       .then(response => response.json())
-//       .then(productData => {
-//         console.log(productData);  
-//         product = productData
-//       })
-//   })()
-//   (function() {
-//     let productId = new URL(window.location.href).searchParams.get('id');
-//     fetch(`http://localhost:3000/api/teddies/${productId}`)
-//       .catch(error => console.log(error))
-//       .then(response => response.json())
-//       .then(productData => {
-//         console.log(productData);  
-//         product = productData
-//       })    
-//   }) ()
 let productId = new URL(window.location.href).searchParams.get('id');
 
 
@@ -184,19 +161,6 @@ function onClick (data) {
 console.log(window.location);
 let redirection = new URL(window.location.href);
 console.log(redirection);
-
-
-
-//let index = colorSelected.selectedIndex;
-//console.log(colorSelected.options[index].value);
-
-//alert( select.options[ index ].value )
-// let prix = document.querySelector('.prix').TEXT_NODE;
-// console.log(prix);
-// function selectedColor () {
-//     let colorSelected = document.querySelector('#colorSelect').value;
-//     console.log(colorSelected);
-// }
 
 class ProduitChoisi {
     constructor(colorSelected, imageUrl, name, price, productId, quantity) {

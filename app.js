@@ -8,7 +8,6 @@ async function getTeddiesData() {
     let data = await response.json();
     console.log(data);
     for(let i = 0; i < data.length; i++) {
-        // console.log(data[i].name);
         img[i].src= data[i].imageUrl;
         nom[i].innerHTML = data[i].name;
         prix[i].innerHTML = `${data[i].price / 100}€`;

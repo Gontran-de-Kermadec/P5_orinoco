@@ -1,22 +1,3 @@
-
-  
-//     // Get current shopping cart
-//     let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'))
-  
-//     // Manage empty or bad localStorage
-//     if ( shoppingCart === null || typeof shoppingCart !== "object" ) shoppingCart = {}
-  
-//     // If product is already in cart
-//     if ( shoppingCart[product._id] ) {
-//       // Increase quantity
-//       shoppingCart[product._id].quantity++
-//     } else {
-//       // Add product
-//       shoppingCart[product._id] = {
-//         quantity: 1,
-//         ...product
-//       }
-//     }
   
 //     // Save new shopping cart
 //     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart))
@@ -45,12 +26,12 @@ getItemInCart.forEach(item => {
     line.innerHTML = `
         <td>
             <div class="img_conteneur mx-auto">
-                <img src="${item.imageUrl}" alt="Ours en peluche" class="picture">
+                <img src="${item.imageUrl}" alt="Ours en peluche" class="photo">
             </div>
         </td>
-        <td>${item.name} - ${item.colorSelected}</td>
-        <td><span class="less">-</span><span class="qty mx-2 px-2 border">${item.quantity}</span><span class="plus">+</span></td>
-        <td><span class="price totprice">${item.price/100}</span>€</td>
+        <td class="fs-4">${item.name} - ${item.colorSelected}</td>
+        <td class="fs-5"><span class="less">-</span><span class="qty mx-2 px-2 border">${item.quantity}</span><span class="plus">+</span></td>
+        <td class="fs-5"><span class="price totprice">${item.price/100}</span>€</td>
         <td class="delete">Supprimer</td>
     `
 });
@@ -109,10 +90,6 @@ for(let i = 0; i < quantite.length; i++) {
         localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
     })
 }
-
-//creation prix total
-//let getAllLines = document.querySelectorAll('.line');
-
 for(let j = 0; j < price.length; j++) {
     sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
     localStorage.setItem('TotalPrice', JSON.stringify(sommetotal));
@@ -147,13 +124,6 @@ for(let i = 0; i < quantite.length; i++) {
             localStorage.setItem('itemPrice', JSON.stringify(getPrices));
             location.reload();
         }
-        // if (getItemInCart[i].quantity === 1) {
-        //     console.log(e.cancelable);
-        //     decreaseItem[i].removeEventListener('click', decreaseItem[i], true);
-        //     // e.preventDefault();
-        //     // e.stopPropagation();
-        //     // e.stopImmediatePropagation();
-        // }
     })
     
 }
