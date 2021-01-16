@@ -57,6 +57,10 @@ main a:hover {
 #avis:hover {
     text-decoration: underline;
 }
+/******Page produit********/
+.btn-panier {
+    display: none;
+}
 
 /******Page panier********/
 .delete, .less, .plus {

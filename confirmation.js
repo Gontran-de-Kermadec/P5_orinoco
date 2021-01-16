@@ -10,7 +10,7 @@ let orderId = localStorage.getItem('orderConfirmationId');
 
 let mainBody = document.querySelector('.mainBody');
 let customerName = document.querySelector('.name');
-customerName.innerHTML = `${orderConfirmation.contact.lastName}`;
+customerName.innerHTML = `${orderConfirmation.contact.firstName}`;
 mainBody.innerHTML = `
 <p class="text-center fs-3 fw-light">Montant de la commande : ${totalPrice}€</p>
 <p class="text-center fs-3 fw-light">Référence de la commande : ${orderId}</p>
