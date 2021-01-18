@@ -1,12 +1,4 @@
-  
-//     // Save new shopping cart
-//     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart))
-  
-    // Redirect to shopping cart page
-    //window.location.href = `${window.location.origin}/cart.html?lastAddedProductId=${product._id}`
-//console.log(window.location);
-// let objetpanier = localStorage.getItem('ItemInCart');
-// console.log(JSON.stringify(objetpanier));
+
 let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
 console.log(getItemInCart.length);
 let getPrices = JSON.parse(localStorage.getItem('itemPrice'));
@@ -17,6 +9,14 @@ console.log(prixTotalItem);
     //affichage panier
 let tbody = document.querySelector('.tbody');
 let line = document.createElement("tr");
+
+////////////////////Si panier vide/////////////////////////////////
+let panierVide = document.querySelector('.panier-vide');
+if(getItemInCart.length > 0) {
+    panierVide.style.display = "none";
+} else if (getItemInCart.length === 0) {
+    panierVide.style.display = "block";
+}
 
 
 getItemInCart.forEach(item => {
@@ -138,16 +138,6 @@ for(let j = 0; j < effacer.length; j++) {
             location.reload();
     })
 }
-    // function alreadyAdded (getItemInCart) {
-    //     getItemInCart
-    // }
-    // console.log(Object.values(getItemInCart[0]));
-    // let objet = Object.values(getItemInCart[0]);
-    // if (objet[0]) {
-    //     console.log(objet[0]);
-    // }
-    // getItemInCart.splice(3, 1);
-    // console.log(getItemInCart);
 /////////////////////////------------------tableau produits------------------////////////////////
 let products = [];
 for(let i = 0; i < quantite.length; i++) {

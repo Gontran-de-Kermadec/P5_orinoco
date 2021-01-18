@@ -10,7 +10,7 @@ a {
 a:hover {
     text-decoration: none;
 }
-main a:hover {
+.lien:hover {
     transform: scale(1.2);
     transition: 0.3s;
 }
@@ -73,7 +73,7 @@ main a:hover {
 form {
     text-align: initial ;
 }
-.prixTotal, .warning {
+.prixTotal, .warning, .panier-vide {
     font-weight: bold;
     font-size: large;
 }
