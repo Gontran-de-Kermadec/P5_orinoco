@@ -12,7 +12,7 @@ class ProduitChoisi {
     }
 }
 
-//--------------------------fonction async anonyme pour recupérer les données
+//--------------------------fonction async anonyme pour recupérer les données-----------------------
 (async function () {
     console.log(productId);
     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
@@ -26,7 +26,7 @@ class ProduitChoisi {
     alreadyAdded(data);
 })()
 
-//----------------------------fonction qui permet l'affichage des données
+//----------------------------fonction qui permet l'affichage des données----------------------------
 function productInfo (data) {
     let productImage = document.querySelector('.picture');
     let productName = document.querySelector('.nom');
@@ -46,7 +46,7 @@ function productInfo (data) {
     });
 }
 
-//fonction qui affiche un nombre d'avis clients aleatoire
+//---------------------------fonction qui affiche un nombre d'avis clients aleatoire--------------------
 let random = document.querySelector('#random');
 function getRandomNumber() {
     return Math.round(Math.random()*100);
@@ -54,7 +54,7 @@ function getRandomNumber() {
 random.innerHTML = getRandomNumber();
 
 
- //////////prtie pour ....... 
+ //----------------------------fonction qui permet d'ajouter un produit au panier au clic sur le bouton
 function onClick (data) {
     let itemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
     let addCartButton = document.querySelector(".add-cart");
@@ -98,7 +98,7 @@ function onClick (data) {
 })}
 
 
-////////////fonction pour verifier si au moins un article est déjà present dans itemInCart////////////////
+//-------------fonction pour verifier si au moins un article est déjà present dans itemInCart---------------
 function alreadyAdded (data) {
     let alreadyAdded = JSON.parse(localStorage.getItem('ItemInCart'));
     let addCartButton = document.querySelector(".add-cart");
@@ -126,8 +126,3 @@ function alreadyAdded (data) {
         btnPanier.style.display = "none";
     }
 }
-
-
-// console.log(window.location);
-// let redirection = new URL(window.location.href);
-// console.log(redirection);
