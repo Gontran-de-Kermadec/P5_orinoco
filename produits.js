@@ -1,4 +1,3 @@
-//-----------------------------------Variables globales----------------------------
 let productId = new URL(window.location.href).searchParams.get('id');
 
 class ProduitChoisi {
@@ -13,21 +12,16 @@ class ProduitChoisi {
 }
 
 //--------------------------fonction async anonyme pour recupérer les données-----------------------
-(async function () {
-    console.log(productId);
+(async function() {
     let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
     let data = await response.json();
     productInfo(data);
     onClick(data);
-    let colorSelected = document.querySelector('#colorSelect').value;
-    let imageUrl = data.imageUrl;
-    let name = data.name;
-    let price = data.price;
     alreadyAdded(data);
 })()
 
 //----------------------------fonction qui permet l'affichage des données----------------------------
-function productInfo (data) {
+function productInfo(data) {
     let productImage = document.querySelector('.picture');
     let productName = document.querySelector('.nom');
     let productPrice = document.querySelector('.prix');
@@ -37,7 +31,6 @@ function productInfo (data) {
     productName.innerHTML = data.name;
     productPrice.innerHTML = `${data.price / 100}€`;
     productDescription.innerHTML = data.description;
-    console.log(data.colors);
     data.colors.forEach(color => {
         let options = document.createElement("option");
         productColor.appendChild(options);
@@ -50,25 +43,51 @@ function productInfo (data) {
 let random = document.querySelector('#random');
 function getRandomNumber() {
     return Math.round(Math.random()*100);
-  }
+}
 random.innerHTML = getRandomNumber();
 
 
- //----------------------------fonction qui permet d'ajouter un produit au panier au clic sur le bouton
-function onClick (data) {
+//---------------------fonction qui verifie si le produit existe deja et agit sur le bouton----------
+function checkColor(itemInCart, theName) {
+    let btnPanier = document.querySelector('.btn-panier');
+    let addCartButton = document.querySelector(".add-cart");
+    btnPanier.style.display = "block";
+    let choixCouleur = document.querySelector('#colorSelect');
+    let productExist = (itemInCart.find(nom => nom.name === theName && nom.colorSelected === choixCouleur.value));
+    if (productExist) {
+        addCartButton.disabled = true;
+    } else {
+        addCartButton.disabled = false;
+    }
+}
+
+//----------------------fonction qui ecoute le changement de couleur et agit sur le bouton---------
+function colorChange(itemInCart, theName) {
+    let choixCouleur = document.querySelector('#colorSelect');
+    let addCartButton = document.querySelector(".add-cart");
+    choixCouleur.addEventListener('change', (e) => {
+        if ((itemInCart.find(nom => nom.name === theName && nom.colorSelected === e.target.value))) {
+            addCartButton.disabled = true;
+        } else {
+            addCartButton.disabled = false; 
+        }
+    });
+}
+
+ //----------------------------fonction qui permet d'ajouter un produit au panier au clic sur le bouton--
+ function onClick(data) {
     let itemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
     let addCartButton = document.querySelector(".add-cart");
     let imageUrl = data.imageUrl;
     let name = data.name;
     let price = data.price;
+    let btnPanier = document.querySelector('.btn-panier');
     addCartButton.addEventListener("click", () => {
         let colorSelected = document.querySelector('#colorSelect').value;
-        console.log(itemInCart);
         let itemPrice = JSON.parse(localStorage.getItem('itemPrice'));
         if (itemInCart === null) {
             itemInCart = [];
             itemPrice = [];
-            let btnPanier = document.querySelector('.btn-panier');
             btnPanier.style.display = "block";
         } 
         let nouveau = new ProduitChoisi(colorSelected, imageUrl, name, price, productId, 1);
@@ -79,49 +98,19 @@ function onClick (data) {
         localStorage.setItem('itemPrice', JSON.stringify(itemPrice));
         addCartButton.disabled = true;
         if (itemInCart !== null) {
-            let choixCouleur = document.querySelector('#colorSelect');
-            let productExist = (itemInCart.find(nom => nom.name === data.name && nom.colorSelected === choixCouleur.value));
-            if (productExist) {
-                addCartButton.disabled = true;
-            } else {
-                addCartButton.disabled = false;
-            }
-            choixCouleur.addEventListener('change', (e) => {
-                if ((itemInCart.find(nom => nom.name === data.name && nom.colorSelected === e.target.value))) {
-                    console.log('produit existant');
-                    addCartButton.disabled = true;
-                } else {
-                    addCartButton.disabled = false; 
-                }
-            });
+            checkColor(itemInCart, name);
+            colorChange(itemInCart, name);
         } 
-})}
+    })
+}
 
-
-//-------------fonction pour verifier si au moins un article est déjà present dans itemInCart---------------
+//-------------fonction pour verifier et agir sur l'etat des boutons de la page hors du clic------------------------
 function alreadyAdded (data) {
     let alreadyAdded = JSON.parse(localStorage.getItem('ItemInCart'));
-    let addCartButton = document.querySelector(".add-cart");
     let btnPanier = document.querySelector('.btn-panier');
     if (alreadyAdded.length > 0) {
-        console.log(alreadyAdded.length);
-        btnPanier.style.display = "block";
-        let choixCouleur = document.querySelector('#colorSelect');
-        let productExist = (alreadyAdded.find(nom => nom.name === data.name && nom.colorSelected === choixCouleur.value));
-        if (productExist) {
-            addCartButton.disabled = true;
-        } else {
-            addCartButton.disabled = false;
-        }
-        choixCouleur.addEventListener('change', (evnmt) => {
-            console.log(evnmt.target.value);
-            if ((alreadyAdded.find(nom => nom.name === data.name && nom.colorSelected === evnmt.target.value))) {
-                console.log('produit existant');
-                addCartButton.disabled = true;
-            } else {
-                addCartButton.disabled = false; 
-            }
-        });
+        checkColor(alreadyAdded, data.name);
+        colorChange(alreadyAdded, data.name);
     } else {
         btnPanier.style.display = "none";
     }

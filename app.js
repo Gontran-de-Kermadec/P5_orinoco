@@ -3,10 +3,15 @@ let nom = document.querySelectorAll('.nom');
 let prix = document.querySelectorAll('.prix');
 let description = document.querySelectorAll('.description');
 let lien = document.querySelectorAll('.lien');
+//----------------------------fonction asynchrone afin de recuperer les données du serveur---------------
 async function getTeddiesData() {
     let response = await fetch('http://localhost:3000/api/teddies');
     let data = await response.json();
-    console.log(data);
+    displayTeddiesData(data);
+}
+getTeddiesData();
+//-----------------------------fonction pour afficher les données des peluches---------------------------
+function displayTeddiesData(data) {
     for(let i = 0; i < data.length; i++) {
         img[i].src= data[i].imageUrl;
         nom[i].innerHTML = data[i].name;
@@ -15,4 +20,3 @@ async function getTeddiesData() {
         lien[i].href= `/produits.html?id=${data[i]._id}`;    
     }
 }
-getTeddiesData();
