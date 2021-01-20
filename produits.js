@@ -13,11 +13,16 @@ class ProduitChoisi {
 
 //--------------------------fonction async anonyme pour recupérer les données-----------------------
 (async function() {
-    let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
-    let data = await response.json();
-    productInfo(data);
-    onClick(data);
-    alreadyAdded(data);
+    try {
+        let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
+        let data = await response.json();
+        productInfo(data);
+        onClick(data);
+        alreadyAdded(data);
+    } catch (error) {
+        console.log(error);
+    }
+    
 })()
 
 //----------------------------fonction qui permet l'affichage des données----------------------------
@@ -100,6 +105,7 @@ function colorChange(itemInCart, theName) {
         if (itemInCart !== null) {
             checkColor(itemInCart, name);
             colorChange(itemInCart, name);
+            countQty(itemInCart);
         } 
     })
 }
@@ -111,7 +117,19 @@ function alreadyAdded (data) {
     if (alreadyAdded.length > 0) {
         checkColor(alreadyAdded, data.name);
         colorChange(alreadyAdded, data.name);
+        countQty(alreadyAdded);
     } else {
         btnPanier.style.display = "none";
     }
+}
+
+//----------------------------fonction qui compte et affiche la quantité de produit sélectionné----------
+function countQty(itemInCart) {
+    let quantite = 0;
+    for(let i = 0; i < itemInCart.length; i++) {
+        quantite += itemInCart[i].quantity;
+    }
+    const counter = document.querySelector('.count');
+    counter.innerHTML = quantite;
+    localStorage.setItem('counter', JSON.stringify(quantite));
 }

@@ -3,11 +3,11 @@ let getItemInCart = JSON.parse(localStorage.getItem('ItemInCart'));
 let getPrices = JSON.parse(localStorage.getItem('itemPrice'));
 let prixTotalItem = JSON.parse(localStorage.getItem('prixTotalItem'));
 
-//------------------------affichage panier---------------------------
+//----------------------------------affichage panier---------------------------
 let tbody = document.querySelector('.tbody');
 let line = document.createElement("tr");
 
-//------------------------------Affichage para panier vide-------------------------------
+//----------------------------------Affichage para panier vide-----------------------------------
 let panierVide = document.querySelector('.panier-vide');
 if(getItemInCart.length > 0) {
     panierVide.style.display = "none";
@@ -33,49 +33,61 @@ getItemInCart.forEach(item => {
     `
 });
 
-//-----------------------------------------Manipulation quantité------------------------------------
-let price = document.querySelectorAll(".price");
-let quantite = document.querySelectorAll(".qty");
-let prixTotal;
+//-----------------------------------------Manipulation prix------------------------------------
 let addItem = document.querySelectorAll(".plus");
 let decreaseItem = document.querySelectorAll(".less");
+let price = document.querySelectorAll(".price");
+let prixTotal;
 prixTotalItem = [];
 let sommetotal;
-for(let i = 0; i < quantite.length; i++) {
-    let quantiteTot = (parseInt(quantite[i].textContent));
-    const prixItemOrigin = parseInt(getPrices[i]);
-    let prixItem = parseInt(price[i].textContent);
-    let prixTotItem;
-    prixTotal = getItemInCart[i].quantity * prixItemOrigin;
-    prixTotalItem.splice([i], 1, prixItem);
-    localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
-    //Augmente le nombre d'articles
-    addItem[i].addEventListener("click", () => {
-        quantiteTot = quantiteTot + 1;
-        quantite[i].innerHTML = quantiteTot;
-        prixTotItem = prixItemOrigin + parseInt(price[i].textContent);
-        price[i].innerHTML = prixTotItem;
-        getItemInCart[i].price = prixTotItem * 100;  
-        getItemInCart[i].quantity = quantiteTot; 
-        localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
-        prixTotalItem.splice([i], 1, prixTotItem);
+(function manipulatePrice() {
+    for(let i = 0; i < price.length; i++) {
+        const prixItemOrigin = parseInt(getPrices[i]);
+        let prixItem = parseInt(price[i].textContent);
+        let prixTotItem;
+        prixTotal = getItemInCart[i].quantity * prixItemOrigin;
+        prixTotalItem.splice([i], 1, prixItem);
         localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
-    });
-    //Diminue le nombre d'articles
-    decreaseItem[i].addEventListener("click", () => {
-        quantiteTot = quantiteTot - 1;
-        quantite[i].innerHTML = quantiteTot;
-        prixTotItem = parseInt(price[i].textContent) - prixItemOrigin;
-        price[i].innerHTML = prixTotItem;
-        getItemInCart[i].price = prixTotItem * 100;
-        getItemInCart[i].quantity = quantiteTot; 
-        localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
-        prixTotalItem.splice([i], 1, prixTotItem);
-        localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
-    })
-}
+        //Actualise à la hausse le prix total par produit
+        addItem[i].addEventListener("click", () => {
+            prixTotItem = prixItemOrigin + parseInt(price[i].textContent);
+            price[i].innerHTML = prixTotItem;
+            getItemInCart[i].price = prixTotItem * 100;  
+            prixTotalItem.splice([i], 1, prixTotItem);
+            localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
+        });
+        //Actualise à la baisse le prix total par produit
+        decreaseItem[i].addEventListener("click", () => {
+            prixTotItem = parseInt(price[i].textContent) - prixItemOrigin;
+            price[i].innerHTML = prixTotItem;
+            getItemInCart[i].price = prixTotItem * 100;
+            prixTotalItem.splice([i], 1, prixTotItem);
+            localStorage.setItem('prixTotalItem', JSON.stringify(prixTotalItem));
+        })
+    }
+})();
 
-//----------------------------------fonction de calcul des differentes sommes---------------------------------
+//-------------------------------------------Manipulation quantité---------------------------------------
+let quantite = document.querySelectorAll(".qty");
+(function manipulateQty() {
+    for(let i = 0; i < quantite.length; i++) {
+        let quantiteTot = (parseInt(quantite[i].textContent));
+        addItem[i].addEventListener("click", () => {
+            quantiteTot = quantiteTot + 1;
+            quantite[i].innerHTML = quantiteTot;
+            getItemInCart[i].quantity = quantiteTot; 
+            localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+        })
+        decreaseItem[i].addEventListener("click", () => {
+            quantiteTot = quantiteTot - 1;
+            quantite[i].innerHTML = quantiteTot;
+            getItemInCart[i].quantity = quantiteTot; 
+            localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
+        })
+    }
+})();
+
+//----------------------------------Fonction de calcul des differentes sommes---------------------------------
 (function sum() {
     for(let j = 0; j < price.length; j++) {
         sommetotal = prixTotalItem.reduce((a, b)=> a + b,0);
@@ -95,7 +107,7 @@ for(let i = 0; i < quantite.length; i++) {
     }
 })();
 
-//---------------------------------fonction de suppression d'un article-----------------------------------
+//---------------------------------Fonction de suppression d'un article-----------------------------------
 (function deleteItem() {
     let effacer = document.querySelectorAll(".delete");
     //Suppression lorsque article egale 0
@@ -116,12 +128,44 @@ for(let i = 0; i < quantite.length; i++) {
                 console.log(getItemInCart[j]);
                 let elementSuppr = getItemInCart.splice([j], 1);
                 let priceSuppr = getPrices.splice([j], 1);
+                deleteItemQty(elementSuppr[0].quantity);
                 localStorage.setItem('ItemInCart', JSON.stringify(getItemInCart));
                 localStorage.setItem('itemPrice', JSON.stringify(getPrices));
                 location.reload();
         })
     }
 })();
+
+//-------------------------------------Fonction de comptage--------------------------------------
+let counter = document.querySelector('.count');
+(function countQty(itemInCart) {
+    let getCounter = JSON.parse(localStorage.getItem('counter'));
+    let quantite = getCounter;
+    counter.innerHTML = quantite;
+    for(let i = 0; i < itemInCart.length; i++) {
+        addItem[i].addEventListener("click", () => {
+            quantite++;
+            counter.innerHTML = quantite;
+            localStorage.setItem('counter', JSON.stringify(quantite)); 
+        })
+        decreaseItem[i].addEventListener("click", () => {
+            quantite--;
+            counter.innerHTML = quantite;
+            localStorage.setItem('counter', JSON.stringify(quantite));
+        })
+    }
+})(getItemInCart);
+
+
+//-----------------------------Fonction qui soustrait au compteur la quantité du produit supprimé--------
+function deleteItemQty(elementSuppr) {
+    let getCounter = JSON.parse(localStorage.getItem('counter'));
+    let quantite = getCounter;
+    quantite = quantite - elementSuppr;
+    counter.innerHTML = quantite;
+    localStorage.setItem('counter', JSON.stringify(quantite));
+};
+
 
 //-------------------------------------Creation tableau produits  et objet contact à envoyer-----------------------------------------
 let products = [];
@@ -137,7 +181,7 @@ class Contact {
         this.email = email;
     }
 }
-//---------------------------------------------Validation formulaire--------------------------------------
+
 let submitBtn = document.querySelector("#btn");
 let myForm = document.querySelector("#form");
 let lastName = document.querySelector("#lastname");
@@ -146,20 +190,22 @@ let emailAddress = document.querySelector("#email");
 let address = document.querySelector("#address");
 let city = document.querySelector("#city");
 let errorMessage = document.querySelector(".error");
+//----------------------------------------Soumission du formulaire----------------------------------
 myForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (checkForm() == true) {
         let contact = new Contact(this.lastname.value,this.firstname.value,this.address.value,this.city.value,this.email.value);
         let commande = {
                 products,
-                contact,
+                contact
                 };
-        console.log(commande);
         sendForm(commande);
     } else {
         e.preventDefault();
     }
 })
+
+//-----------------------------------------Validation formulaire--------------------------------------
 function checkForm() {
     let regexName = /^[A-Za-z\'\s\.\-\,]+$/;
     let regexEmail = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/; 
@@ -167,21 +213,19 @@ function checkForm() {
     let alerte = "";
     if(regexName.test(lastName.value) === false) {
         alerte = "verifier nom";
-        lastName.style.backgroundColor = "red";
         errorMessage.innerHTML = 'Nom incorrect';
         
     } else if (regexName.test(firstName.value) === false) {
         alerte = "verifier prenom";
-        firstName.style.backgroundColor = "red";
         errorMessage.innerHTML = 'Prénom incorrect';
     }
     if(regexEmail.test(emailAddress.value) === false) {
         alerte = "verifier adresse";
-        emailAddress.style.backgroundColor = "red";
         errorMessage.innerHTML = 'Email incorrect';  
     }
     if(regexAddress.test(address.value) === false || regexName.test(city.value) === false) {
-        alerte = "verifier vile"; 
+        alerte = "verifier ville"; 
+        errorMessage.innerHTML = "L'adresse ou la ville est incorrecte"; 
     }
     if (alerte === "") {
         console.log("all good");
@@ -189,7 +233,7 @@ function checkForm() {
     }
 }
 
-//----------------------------------------------Envoi données-----------------------------------------
+//----------------------------------------------Envoi données au serveur-------------------------------------
 async function sendForm(commande) {
     try {
         let response = await fetch("http://localhost:3000/api/teddies/order", {
@@ -199,11 +243,9 @@ async function sendForm(commande) {
             },
             body: JSON.stringify(commande),
         });
-        console.log(response);
         if (response.ok) {
             let responseId = await response.json();
             confirmationId(responseId);
-            console.log(responseId);
             window.location = "confirmation.html";
         } else {
             console.error('Retour du serveur : ', response.status);
@@ -213,7 +255,7 @@ async function sendForm(commande) {
     }
 }
 
-//------------------------------localStorage des  infos de la confirmation de commande du backend----------
+//------------------------------localStorage des infos de la confirmation de commande du backend----------
 function confirmationId(responseId) {
     let orderId = responseId.orderId;
     localStorage.setItem("orderConfirmationId", orderId);

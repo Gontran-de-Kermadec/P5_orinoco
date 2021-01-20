@@ -60,6 +60,17 @@ a:hover {
 /******Page produit********/
 .btn-panier {
     display: none;
+    width: 300px;
+}
+.count_contain {
+    position: relative;
+}
+.count {
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
 }
 
 /******Page panier********/
@@ -104,6 +115,9 @@ input {
     }
     .photo {
         border-radius: 15px;
+    }
+    .infos_container {
+        padding-bottom: 10px;
     }
 }
 @media (min-width: 768px) {

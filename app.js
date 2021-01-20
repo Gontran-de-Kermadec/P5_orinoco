@@ -5,9 +5,14 @@ let description = document.querySelectorAll('.description');
 let lien = document.querySelectorAll('.lien');
 //----------------------------fonction asynchrone afin de recuperer les données du serveur---------------
 async function getTeddiesData() {
-    let response = await fetch('http://localhost:3000/api/teddies');
-    let data = await response.json();
-    displayTeddiesData(data);
+    try {
+        let response = await fetch('http://localhost:3000/api/teddies');
+        let data = await response.json();
+        displayTeddiesData(data);
+    } catch (error) {
+        console.log(error);
+    }
+   
 }
 getTeddiesData();
 //-----------------------------fonction pour afficher les données des peluches---------------------------
@@ -20,3 +25,9 @@ function displayTeddiesData(data) {
         lien[i].href= `/produits.html?id=${data[i]._id}`;    
     }
 }
+
+//----------------------------------affichage panier-------------------------------
+if(JSON.parse(localStorage.getItem('counter')) !== null) {
+    document.querySelector('.count').innerHTML = JSON.parse(localStorage.getItem('counter'));
+}
+
