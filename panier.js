@@ -195,11 +195,11 @@ myForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (checkForm() == true) {
         let contact = new Contact(this.lastname.value,this.firstname.value,this.address.value,this.city.value,this.email.value);
-        let commande = {
+        let order = {
                 products,
                 contact
                 };
-        sendForm(commande);
+        sendForm(order);
     } else {
         e.preventDefault();
     }
@@ -234,18 +234,18 @@ function checkForm() {
 }
 
 //----------------------------------------------Envoi données au serveur-------------------------------------
-async function sendForm(commande) {
+async function sendForm(order) {
     try {
         let response = await fetch("http://localhost:3000/api/teddies/order", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(commande),
+            body: JSON.stringify(order),
         });
         if (response.ok) {
-            let responseId = await response.json();
-            confirmationId(responseId);
+            let resp = await response.json();
+            confirmationId(resp);
             window.location = "confirmation.html";
         } else {
             console.error('Retour du serveur : ', response.status);
@@ -256,8 +256,8 @@ async function sendForm(commande) {
 }
 
 //------------------------------localStorage des infos de la confirmation de commande du backend----------
-function confirmationId(responseId) {
-    let orderId = responseId.orderId;
+function confirmationId(resp) {
+    let orderId = resp.orderId;
     localStorage.setItem("orderConfirmationId", orderId);
-    localStorage.setItem("orderConfirmation", JSON.stringify(responseId));
+    localStorage.setItem("orderConfirmation", JSON.stringify(resp));
 }
