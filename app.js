@@ -23,7 +23,7 @@ function displayTeddiesData(data) {
         nom[i].innerHTML = data[i].name;
         prix[i].innerHTML = `${data[i].price / 100}€`;
         description[i].innerHTML = data[i].description;
-        lien[i].href= `/produits.html?id=${data[i]._id}`;    
+        lien[i].href= `produits.html?id=${data[i]._id}`;    
     }
 }
 
