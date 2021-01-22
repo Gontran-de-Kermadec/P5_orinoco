@@ -14,7 +14,8 @@ class ProduitChoisi {
 //--------------------------fonction async anonyme pour recupérer les données-----------------------
 (async function() {
     try {
-        let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
+        //let response = await fetch(`http://localhost:3000/api/teddies/${productId}`);
+        let response = await fetch(`https://oc-orinoco-p5.herokuapp.com/api/teddies/${productId}`);
         let data = await response.json();
         productInfo(data);
         onClick(data);
