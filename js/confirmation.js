@@ -16,5 +16,5 @@ let orderId = localStorage.getItem('orderConfirmationId');
 //----------------------bouton de renvoi à la page d'accueil et suppression du localstorage-------------
 document.querySelector('button').addEventListener('click', (e) => {
     localStorage.clear();
-    window.location = "index.html";
+    window.location = "../index.html";
 })
