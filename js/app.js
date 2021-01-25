@@ -6,8 +6,8 @@ let lien = document.querySelectorAll('.lien');
 //----------------------------fonction asynchrone afin de recuperer les données du serveur---------------
 async function getTeddiesData() {
     try {
-        let response = await fetch('http://localhost:3000/api/teddies');
-        //let response = await fetch('https://oc-orinoco-p5.herokuapp.com/api/teddies');
+        //let response = await fetch('http://localhost:3000/api/teddies');
+        let response = await fetch('https://oc-orinoco-p5.herokuapp.com/api/teddies');
         let data = await response.json();
         displayTeddiesData(data);
     } catch (error) {

@@ -236,8 +236,8 @@ function checkForm() {
 //----------------------------------------------Envoi données au serveur-------------------------------------
 async function sendForm(order) {
     try {
-        let response = await fetch("http://localhost:3000/api/teddies/order", {
-        //let response = await fetch("https://oc-orinoco-p5.herokuapp.com/api/teddies/order", {
+        //let response = await fetch("http://localhost:3000/api/teddies/order", {
+        let response = await fetch("https://oc-orinoco-p5.herokuapp.com/api/teddies/order", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
